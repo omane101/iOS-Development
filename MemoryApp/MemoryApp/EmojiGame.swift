@@ -8,18 +8,18 @@
 
 import SwiftUI
 
-func createNewCard(index: Int) -> String {
-    let emojis: Array<String> = ["🦇", "👹"]
-    for index in 0..<4 {
-        return emojis[index]
-    }
+func get_index(index: Int, arr: Array<String>) -> String {
+    return arr[index]
 }
 
-class EmojiGame {
-    private var game: Game<String> = createNewGame()
+class EmojiGame: ObservableObject {
+    @Published private var game: Game<String> = createNewGame() // @Published is a property wrapper, everytime this var changes it calles objectWillChange.send()
     
     static func createNewGame() -> Game<String> {
-        return Game<String>(numOfPairs: 2, cardFactory: createNewCard)
+        let emojis: Array<String> = ["🦇", "👹", "🎃"]
+        return Game<String>(numOfPairs: emojis.count){pair in
+            return emojis[pair]
+        }
     }
     
     // MARK: - Access to the model
@@ -28,7 +28,8 @@ class EmojiGame {
     }
     //MARK: - Intents(s)
     func choose(card: Game<String>.Card){
-        game.choose(card: card)
+        objectWillChange.send()
+        game.choose(card)
     }
 }
 
