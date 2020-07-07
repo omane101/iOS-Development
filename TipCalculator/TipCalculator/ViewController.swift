@@ -9,7 +9,7 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
     @IBOutlet weak var billedAmountTextField: UITextField!
     @IBOutlet weak var tipControl: UISegmentedControl!
     
@@ -21,7 +21,9 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        // Do any addiional setup after loading the view.
+        self.title = "Tipping Calculator"
+        self.updateLabels()
     }
 
     @IBAction func onTap(_ sender: Any) {
@@ -30,28 +32,17 @@ class ViewController: UIViewController {
     
     @IBAction func calculateTip(_ sender: Any) {
         // Get the bill amount
-        let bill = Double(billedAmountTextField.text!) ?? 0
+        bill = Double(billedAmountTextField.text!) ?? 0
         
-        // Calculate the tip and total
-        let tipPercentages = [0.15, 0.18, 0.2]
+        calculateNewTip()
         
-        let index = tipControl.selectedSegmentIndex
-        var tip = 0.0
-        var total = 0.0
-        
-        if index == 3 {
-            let customTip = Double(customTipTextField.text!) ?? 0
-            tip = bill * (Double(customTip/100.00))
-            total = bill + tip
-        } else {
-            tip = bill * tipPercentages[index]
-            total = bill + tip
-        }
-        
-        
-        // Update the tip and total labels
+        updateLabels()
+    }
+    
+    func updateLabels() {
         tipPercentageLabel.text = String(format: "$%.2f", tip) //"$\(tip)"
         totalLabel.text = String(format: "$%.2f", total) //"$\(total)"
     }
+    
 }
 
