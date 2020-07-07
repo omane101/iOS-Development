@@ -24,10 +24,12 @@ class ViewController: UIViewController {
         // Do any addiional setup after loading the view.
         self.title = "Tipping Calculator"
         self.updateLabels()
+        
+        // show keyboard
+        billedAmountTextField.becomeFirstResponder()
     }
 
     @IBAction func onTap(_ sender: Any) {
-        view.endEditing(true)
     }
     
     @IBAction func calculateTip(_ sender: Any) {
@@ -40,8 +42,8 @@ class ViewController: UIViewController {
     }
     
     func updateLabels() {
-        tipPercentageLabel.text = String(format: "$%.2f", tip) //"$\(tip)"
-        totalLabel.text = String(format: "$%.2f", total) //"$\(total)"
+        tipPercentageLabel.text = getTipLabelText()
+        totalLabel.text = getTotalLabelText()
     }
     
 }
